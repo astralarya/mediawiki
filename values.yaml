@@ -1,0 +1,20 @@
+
+mediawiki:
+  name: My Mediawiki
+  slug: my
+  host: my.example.com
+  user: admin
+  password: "******"
+  email: admin@example.com
+
+database:
+  host: my.database.example.com
+  name: mediawiki_my
+  user: user@example
+  password: "******"
+
+azure:
+  volumeHandle: /subscriptions/my-subscription/resourceGroups/my-group/providers/Microsoft.Compute/disks/mediawiki-my
+  region: westus2
+
+debug: false

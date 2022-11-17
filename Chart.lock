@@ -1,0 +1,6 @@
+dependencies:
+- name: mediawiki
+  repository: https://charts.bitnami.com/bitnami
+  version: 14.3.8
+digest: sha256:95c946532b3dfcab976b4f008ec77ec900aec7703e42f6a7c4c91bfe88530adf
+generated: "2022-11-16T18:05:49.7164699-08:00"

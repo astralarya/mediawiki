@@ -1,0 +1,53 @@
+mediawikiName: {{ .Values.mediawiki.name }}
+mediawikiHost: {{ .Values.mediawiki.host }}
+
+allowEmptyPassword: "no"
+
+mediawikiUser: {{ .Values.mediawiki.user }}
+mediawikiPassword: {{ .Values.mediawiki.password }}
+mediawikiEmail: {{ .Values.mediawiki.email }}
+
+extraEnvVars:
+  {{- if .Values.debug -}}
+  - name: BITNAMI_DEBUG
+    value: "true"
+  {{- end -}}
+  - name: MEDIAWIKI_ENABLE_HTTPS
+    value: "yes"
+  - name: PHP_ENABLE_OPCACHE
+    value: "yes"
+
+extraVolumeMounts:
+  - name: php-conf
+    mountPath: /opt/bitnami/php/etc/conf.d
+
+extraVolumes:
+  - name: php-conf
+    secret:
+      secretName: php-conf
+
+
+persistence:
+  existingClaim: mediawiki-{{ .Values.mediawiki.slug }}
+
+service:
+  type: ClusterIP
+
+ingress:
+  enabled: true
+  tls: true
+  hostname: {{ .Values.mediawiki.host }}
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/acme-challenge-type: http01
+
+mariadb:
+  enabled: false
+
+externalDatabase:
+  host: {{ .Values.database.host }}
+  database: {{ .Values.database.name }}
+  user: {{ .Values.database.user }}
+  password: {{ .Values.database.password }}
