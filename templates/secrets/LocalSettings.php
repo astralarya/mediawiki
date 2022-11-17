@@ -153,6 +153,4 @@ $wgGroupPermissions['*']['createaccount'] = false;
 $wgStrictFileExtensions = false;
 
 # Activate cache
-$wgUseFileCache = true; /* default: false */
-$wgFileCacheDirectory = "$IP/cache";
-$wgShowIPinHeader = false;
+$wgCacheDirectory = "$IP/cache";
