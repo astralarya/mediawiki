@@ -1,11 +1,36 @@
 mediawikiName: {{ .Values.mediawiki.name }}
 mediawikiHost: {{ .Values.mediawiki.host }}
+mediawikiEmail: {{ .Values.mediawiki.email }}
+mediawikiUser: {{ .Values.mediawiki.user }}
+mediawikiPassword: {{ .Values.mediawiki.password }}
 
 allowEmptyPassword: "no"
 
-mediawikiUser: {{ .Values.mediawiki.user }}
-mediawikiPassword: {{ .Values.mediawiki.password }}
-mediawikiEmail: {{ .Values.mediawiki.email }}
+mariadb:
+  enabled: false
+
+externalDatabase:
+  host: {{ .Values.database.host }}
+  database: {{ .Values.database.name }}
+  user: {{ .Values.database.user }}
+  password: {{ .Values.database.password }}
+
+
+persistence:
+  existingClaim: mediawiki-{{ .Values.mediawiki.slug }}
+
+service:
+  type: ClusterIP
+
+ingress:
+  enabled: true
+  tls: true
+  hostname: {{ .Values.mediawiki.host }}
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/acme-challenge-type: http01
 
 extraEnvVars:
   {{- if .Values.debug -}}
@@ -26,28 +51,3 @@ extraVolumes:
     secret:
       secretName: php-conf
 
-
-persistence:
-  existingClaim: mediawiki-{{ .Values.mediawiki.slug }}
-
-service:
-  type: ClusterIP
-
-ingress:
-  enabled: true
-  tls: true
-  hostname: {{ .Values.mediawiki.host }}
-  annotations:
-    kubernetes.io/ingress.class: azure/application-gateway
-    appgw.ingress.kubernetes.io/ssl-redirect: "true"
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    cert-manager.io/acme-challenge-type: http01
-
-mariadb:
-  enabled: false
-
-externalDatabase:
-  host: {{ .Values.database.host }}
-  database: {{ .Values.database.name }}
-  user: {{ .Values.database.user }}
-  password: {{ .Values.database.password }}
