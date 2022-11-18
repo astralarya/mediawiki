@@ -2,12 +2,18 @@ azure:
   volumeHandle: /subscriptions/my-subscription/resourceGroups/my-group/providers/Microsoft.Compute/disks/mediawiki-default
   region: westus2
 
+  mariadb:
+    enabled: false
+
 mediawiki:
   mediawikiName: Default Mediawiki
   mediawikiHost: default.wiki.example.com
   mediawikiEmail: admin@example.com
   mediawikiUser: admin
   mediawikiPassword: XXXXXXXX
+
+  mariadb:
+    enabled: false
 
   externalDatabase:
     host: default.database.example.com
@@ -25,9 +31,6 @@ mediawiki:
 
   allowEmptyPassword: "no"
 
-  mariadb:
-    enabled: false
-
   service:
     type: ClusterIP
 
@@ -40,6 +43,9 @@ mediawiki:
       appgw.ingress.kubernetes.io/ssl-redirect: "true"
       cert-manager.io/cluster-issuer: letsencrypt-prod
       cert-manager.io/acme-challenge-type: http01
+  
+  command: ["bash", "/opt/astral/init.sh"]
+  args: ["/opt/bitnami/scripts/apache/run.sh"]
 
   extraEnvVars:
     # - name: BITNAMI_DEBUG
@@ -52,12 +58,26 @@ mediawiki:
   extraVolumeMounts:
     - name: php-conf
       mountPath: /opt/bitnami/php/etc/conf.d
+    - name: init
+      mountPath: /opt/astral/init.sh
+      subPath: init.sh
+    - name: localsettings
+      mountPath: /opt/astral/LocalSettings.php
+      subPath: LocalSettings.php
 
   extraVolumes:
     - name: php-conf
       configMap:
-        name: php-conf
+        name: '{{ template "common.names.fullname" . }}--astral'
         items:
           - key: custom.ini
             path: custom.ini
-
+    - name: init
+      configMap:
+        name: '{{ template "common.names.fullname" . }}--astral'
+        items:
+          - key: init.sh
+            path: init.sh
+    - name: localsettings
+      secret:
+        secretName: '{{ template "common.names.fullname" . }}--astral'

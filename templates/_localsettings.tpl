@@ -1,10 +1,11 @@
+{{- define "astral.mediawiki.localsettings" }}
 <?php
 # Mediawiki settings
 # https://www.mediawiki.org/wiki/Manual:Configuration_settings
 
 # Protect against web entry
 if ( !defined( 'MEDIAWIKI' ) ) {
-	exit;
+    exit;
 }
 
 ## Uncomment this to disable output compression
@@ -29,8 +30,8 @@ $wgResourceBasePath = $wgScriptPath;
 ## The URL paths to the logo.  Make sure you change this from the default,
 ## or else you'll overwrite your logo when you upgrade!
 $wgLogos = [
-	'1x' => "$wgResourceBasePath/skins/local/images/logo.svg",
-	'icon' => "$wgResourceBasePath/skins/local/images/logo-icon.svg",
+    '1x' => "$wgResourceBasePath/skins/local/images/logo.svg",
+    'icon' => "$wgResourceBasePath/skins/local/images/logo-icon.svg",
 ];
 
 ## UPO means: this is also a user preference option
@@ -41,14 +42,14 @@ $wgEnableUserEmail = true; # UPO
 $wgEmergencyContact = '{{ .Values.mediawiki.mediawikiEmail }}';
 $wgPasswordSender = '{{ .Values.mediawiki.mediawikiEmail }}';
 $wgSMTP = [
-	'host' => '{{ .Values.mediawiki.smtpHost }}',
-	'IDHost' => '{{ .Values.mediawiki.mediawikiHost }}',
-	'localhost' => '{{ .Values.mediawiki.mediawikiHost }}',
-	'port' => '{{ .Values.mediawiki.smtpPort }}',
-	'auth' => true,
-	'username' => '{{ .Values.mediawiki.smtpUser }}',
-	'password' => '{{ .Values.mediawiki.smtpPassword }}',
-]
+    'host' => '{{ .Values.mediawiki.smtpHost }}',
+    'IDHost' => '{{ .Values.mediawiki.mediawikiHost }}',
+    'localhost' => '{{ .Values.mediawiki.mediawikiHost }}',
+    'port' => '{{ .Values.mediawiki.smtpPort }}',
+    'auth' => true,
+    'username' => '{{ .Values.mediawiki.smtpUser }}',
+    'password' => '{{ .Values.mediawiki.smtpPassword }}',
+];
 
 $wgEnotifUserTalk = false; # UPO
 $wgEnotifWatchlist = false; # UPO
@@ -152,3 +153,4 @@ $wgStrictFileExtensions = false;
 
 # Activate cache
 $wgCacheDirectory = "$IP/cache";
+{{- end -}}
