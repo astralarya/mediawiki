@@ -55,6 +55,9 @@ mediawiki:
 
   extraVolumes:
     - name: php-conf
-      secret:
-        secretName: php-conf
+      configMap:
+        name: php-conf
+        items:
+          - key: custom.ini
+            path: custom.ini
 
