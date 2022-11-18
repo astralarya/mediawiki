@@ -1,0 +1,27 @@
+mediawiki:
+  mediawikiName: Default Mediawiki
+  mediawikiHost: default.wiki.example.com
+  mediawikiEmail: admin@example.com
+  mediawikiUser: admin
+  mediawikiPassword: XXXXXXXX
+
+  externalDatabase:
+    host: default.database.example.com
+    database: mediawiki_default
+    user: user@example.com
+    password: XXXXXXXX
+
+  smtpHost: mail.example.com
+  smtpPort: 465
+  smtpUser: system@example.com
+  smtpPassword: XXXXXXXX
+
+  persistence:
+    existingClaim: mediawiki-default
+
+  ingress:
+    hostname: default.example.com
+
+azure:
+  volumeHandle: /subscriptions/my-subscription/resourceGroups/my-group/providers/Microsoft.Compute/disks/mediawiki-default
+  region: westus2

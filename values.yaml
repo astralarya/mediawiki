@@ -1,26 +1,60 @@
-
-mediawiki:
-  name: My Mediawiki
-  slug: my
-  host: my.example.com
-  user: admin
-  password: "******"
-  email: admin@example.com
-
-smtp:
-  host: mail.example.com
-  port: 465
-  user: system@example.org
-  password: "******"
-
-database:
-  host: my.database.example.com
-  name: mediawiki_my
-  user: user@example
-  password: "******"
-
 azure:
-  volumeHandle: /subscriptions/my-subscription/resourceGroups/my-group/providers/Microsoft.Compute/disks/mediawiki-my
+  volumeHandle: /subscriptions/my-subscription/resourceGroups/my-group/providers/Microsoft.Compute/disks/mediawiki-default
   region: westus2
 
-debug: false
+mediawiki:
+  mediawikiName: Default Mediawiki
+  mediawikiHost: default.wiki.example.com
+  mediawikiEmail: admin@example.com
+  mediawikiUser: admin
+  mediawikiPassword: XXXXXXXX
+
+  externalDatabase:
+    host: default.database.example.com
+    database: mediawiki_default
+    user: user@example.com
+    password: XXXXXXXX
+
+  smtpHost: mail.example.com
+  smtpPort: 465
+  smtpUser: system@example.com
+  smtpPassword: XXXXXXXX
+
+  persistence:
+    existingClaim: mediawiki-default
+
+  allowEmptyPassword: "no"
+
+  mariadb:
+    enabled: false
+
+  service:
+    type: ClusterIP
+
+  ingress:
+    enabled: true
+    tls: true
+    hostname: default.example.com
+    annotations:
+      kubernetes.io/ingress.class: azure/application-gateway
+      appgw.ingress.kubernetes.io/ssl-redirect: "true"
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      cert-manager.io/acme-challenge-type: http01
+
+  extraEnvVars:
+    # - name: BITNAMI_DEBUG
+    #   value: "true"
+    - name: MEDIAWIKI_ENABLE_HTTPS
+      value: "yes"
+    - name: PHP_ENABLE_OPCACHE
+      value: "yes"
+
+  extraVolumeMounts:
+    - name: php-conf
+      mountPath: /opt/bitnami/php/etc/conf.d
+
+  extraVolumes:
+    - name: php-conf
+      secret:
+        secretName: php-conf
+

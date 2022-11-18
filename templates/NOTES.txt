@@ -1,1 +1,1 @@
-Deploying Mediawiki ({{ .Values.mediawiki.slug }})
+Deploying Mediawiki ({{ .Values.mediawiki.mediawikiName }})
