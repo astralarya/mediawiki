@@ -8,6 +8,11 @@ if ( !defined( 'MEDIAWIKI' ) ) {
     exit;
 }
 
+## Debug options
+# $wgShowExceptionDetails = true;
+# $wgShowDBErrorBacktrace = true;
+# $wgShowSQLErrors = true;
+
 ## Uncomment this to disable output compression
 # $wgDisableOutputCompression = true;
 
