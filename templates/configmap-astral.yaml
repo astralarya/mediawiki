@@ -10,6 +10,12 @@ data:
 
     exec /opt/bitnami/scripts/mediawiki/entrypoint.sh "$@"
   custom.ini: |
+    ; php.ini overrides
+
+    ; Increase upload size
+    upload_max_filesize = 100M
+    post_max_size = 100M
+
     ; Extensions
 
     extension = apcu
