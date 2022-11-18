@@ -15,6 +15,10 @@ externalDatabase:
   user: {{ .Values.database.user }}
   password: {{ .Values.database.password }}
 
+smtpHost: {{ .Values.smtp.host }}
+smtpPort: {{ .Values.smtp.port }}
+smtpUser: {{ .Values.smtp.user }}
+smtpPassword: {{ .Values.smtp.password }}
 
 persistence:
   existingClaim: mediawiki-{{ .Values.mediawiki.slug }}

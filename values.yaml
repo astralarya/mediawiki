@@ -7,6 +7,12 @@ mediawiki:
   password: "******"
   email: admin@example.com
 
+smtp:
+  host: mail.example.com
+  port: 465
+  user: system@example.org
+  password: "******"
+
 database:
   host: my.database.example.com
   name: mediawiki_my
