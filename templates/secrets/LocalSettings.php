@@ -50,7 +50,16 @@ $wgEnableEmail = true;
 $wgEnableUserEmail = true; # UPO
 
 $wgEmergencyContact = '{{ .Values.mediawiki.email }}';
-$wgPasswordSender = '{{ .Values.mediawiki.email }}';
+$wgPasswordSender = '{{ .Values.smtp.email }}';
+$wgSMTP = [
+	'host' => '{{ .Values.smtp.host }}',
+	'IDHost' => '{{ .Values.mediawiki.host }}',
+	'localhost' => '{{ .Values.mediawiki.host }}',
+	'port' => '{{ .Values.smtp.port }}',
+	'auth' => true,
+	'username' => '{{ .Values.smtp.user }}',
+	'password' => '{{ .Values.smtp.password }}',
+]
 
 $wgEnotifUserTalk = false; # UPO
 $wgEnotifWatchlist = false; # UPO
