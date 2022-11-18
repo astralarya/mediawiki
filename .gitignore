@@ -1,2 +1,5 @@
 # Chart dependencies
 **/charts/*.tgz
+
+# Local
+local/
