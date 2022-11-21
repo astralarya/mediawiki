@@ -66,6 +66,7 @@ $wgDBserver = "{{ .Values.mediawiki.externalDatabase.host }}";
 $wgDBname = "{{ .Values.mediawiki.externalDatabase.name }}";
 $wgDBuser = "{{ .Values.mediawiki.externalDatabase.user }}";
 $wgDBpassword = "{{ .Values.mediawiki.externalDatabase.password }}";
+$wgDBssl = true;
 
 # MySQL specific settings
 $wgDBprefix = "";
