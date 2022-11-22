@@ -43,40 +43,43 @@ mediawiki:
       cert-manager.io/cluster-issuer: letsencrypt-prod
       cert-manager.io/acme-challenge-type: http01
   
-  command: ["bash", "/opt/astral/init.sh"]
+  command: ["bash", "/opt/local/bin/init.sh"]
   args: ["/opt/bitnami/scripts/apache/run.sh"]
 
   extraEnvVars:
-    # - name: BITNAMI_DEBUG
-    #   value: "true"
+    - name: BITNAMI_DEBUG
+      value: "true"
     - name: MEDIAWIKI_ENABLE_HTTPS
       value: "yes"
     - name: PHP_ENABLE_OPCACHE
       value: "yes"
+    - name: MYSQL_CLIENT_ENABLE_SSL
+      value: "yes"
+    # - name: MYSQL_CLIENT_SSL_CA_FILE
+    #   value: /opt/local/etc/ssl-ca.crt.pem
 
   extraVolumeMounts:
     - name: php-conf
       mountPath: /opt/bitnami/php/etc/conf.d
-    - name: init
-      mountPath: /opt/astral/init.sh
-      subPath: init.sh
+    - name: local
+      mountPath: /opt/local/bin
     - name: localsettings
-      mountPath: /opt/astral/LocalSettings.php
-      subPath: LocalSettings.php
+      mountPath: /opt/local/etc/LocalSettings.php
 
   extraVolumes:
     - name: php-conf
       configMap:
-        name: '{{ template "common.names.fullname" . }}--astral'
+        name: '{{ template "common.names.fullname" . }}--local'
         items:
           - key: custom.ini
             path: custom.ini
-    - name: init
+    - name: local
       configMap:
-        name: '{{ template "common.names.fullname" . }}--astral'
+        name: '{{ template "common.names.fullname" . }}--local'
+        defaultMode: 0777
         items:
           - key: init.sh
             path: init.sh
     - name: localsettings
       secret:
-        secretName: '{{ template "common.names.fullname" . }}--astral'
+        secretName: '{{ template "common.names.fullname" . }}--local'

@@ -159,4 +159,40 @@ $wgStrictFileExtensions = false;
 
 # Activate cache
 $wgCacheDirectory = "$IP/cache";
+
+# Load extensions
+wfLoadExtension('AbuseFilter');
+wfLoadExtension('CategoryTree');
+wfLoadExtension('Cite');
+wfLoadExtension('CodeEditor');
+wfLoadExtension('Gadgets');
+wfLoadExtension('Graph');
+wfLoadExtension('ImageMap');
+wfLoadExtension('InputBox');
+wfLoadExtension('Interwiki');
+wfLoadExtension('JsonConfig'); // Needed by Graph
+wfLoadExtension('Math');
+wfLoadExtension('MultimediaViewer');
+wfLoadExtension('Nuke');
+wfLoadExtension('OATHAuth');
+wfLoadExtension('PageImages');
+wfLoadExtension('ParserFunctions');
+wfLoadExtension('PdfHandler');
+wfLoadExtension('Poem');
+wfLoadExtension('Popups');
+wfLoadExtension('RenameUser');
+wfLoadExtension('ReplaceText');
+wfLoadExtension('Scribunto');
+wfLoadExtension('SecureLinkFixer');
+wfLoadExtension('SyntaxHighlight');
+wfLoadExtension('TemplateData');
+wfLoadExtension('TextExtracts');
+wfLoadExtension('TitleBlacklist');
+wfLoadExtension('TwoColConflict');
+wfLoadExtension('VisualEditor');
+wfLoadExtension('WikiEditor');
+
+# Extension settings
+$wgDefaultUserOptions['usebetatoolbar'] = 1; // user option provided by WikiEditor extension
+$wgWikiEditorRealtimePreview = true;
 {{- end -}}
