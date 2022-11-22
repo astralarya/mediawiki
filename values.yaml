@@ -55,8 +55,6 @@ mediawiki:
       value: "yes"
     - name: MYSQL_CLIENT_ENABLE_SSL
       value: "yes"
-    # - name: MYSQL_CLIENT_SSL_CA_FILE
-    #   value: /opt/local/etc/ssl-ca.crt.pem
 
   extraVolumeMounts:
     - name: php-conf
