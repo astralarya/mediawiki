@@ -170,7 +170,7 @@ wfLoadExtension('Graph');
 wfLoadExtension('ImageMap');
 wfLoadExtension('InputBox');
 wfLoadExtension('Interwiki');
-wfLoadExtension('JsonConfig'); // Needed by Graph
+wfLoadExtension('JsonConfig');
 wfLoadExtension('Math');
 wfLoadExtension('MultimediaViewer');
 wfLoadExtension('Nuke');
