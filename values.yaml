@@ -78,6 +78,23 @@ mediawiki:
         items:
           - key: init.sh
             path: init.sh
+    - name: init
+      configMap:
+        name: '{{ template "common.names.fullname" . }}--init'
+        defaultMode: 0777
+        items:
+          - key: get_mediawiki_extensions.sh
+            path: get_mediawiki_extensions.sh
     - name: localsettings
       secret:
         secretName: '{{ template "common.names.fullname" . }}--local'
+
+  initContainers:
+  - name: '{{ template "common.names.fullname" . }}--init'
+    image: bash
+    args: ["/opt/init/bin/get_mediawiki_extensions.sh"]
+    volumeMounts:
+    - name: mediawiki-data
+      mountPath: /bitnami/mediawiki
+    - name: init
+      mountPath: /opt/init/bin

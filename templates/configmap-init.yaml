@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "common.names.fullname" . }}--local-init
+  name: {{ template "common.names.fullname" . }}--init
 data:
   get_mediawiki_extensions.sh: |
-    #!/bin/bash
+    set -e
 
     cd /bitnami/mediawiki/extensions
 
@@ -28,11 +28,11 @@ data:
         'PdfHandler'
         'Poem'
         'Popups'
-        'RenameUser'
+        'Renameuser'
         'ReplaceText'
         'Scribunto'
         'SecureLinkFixer'
-        'SyntaxHighlight'
+        'SyntaxHighlight_GeSHi'
         'TemplateData'
         'TextExtracts'
         'TitleBlacklist'
@@ -53,7 +53,7 @@ data:
         URL="$(echo_extension_url "$NAME")"
         if [ ! -d "$NAME" ]
         then
-            curl -o "${NAME}.tar.gz" "$URL" && \
+            wget -O "${NAME}.tar.gz" "$URL" && \
             mkdir "$NAME" && \
             tar -xf "${NAME}.tar.gz" -C "$NAME" && \
             rm "${NAME}.tar.gz"
