@@ -43,9 +43,6 @@ mediawiki:
       cert-manager.io/cluster-issuer: letsencrypt-prod
       cert-manager.io/acme-challenge-type: http01
   
-  command: ["bash", "/opt/local/bin/init.sh"]
-  args: ["/opt/bitnami/scripts/apache/run.sh"]
-
   extraEnvVars:
     - name: BITNAMI_DEBUG
       value: "true"
@@ -53,16 +50,14 @@ mediawiki:
       value: "yes"
     - name: PHP_ENABLE_OPCACHE
       value: "yes"
+    - name: MYSQL_CLIENT_ENABLE_SSL_WRAPPER
+      value: "yes"
     - name: MYSQL_CLIENT_ENABLE_SSL
       value: "yes"
 
   extraVolumeMounts:
     - name: php-conf
       mountPath: /opt/bitnami/php/etc/conf.d
-    - name: local
-      mountPath: /opt/local/bin
-    - name: localsettings
-      mountPath: /opt/local/etc/LocalSettings.php
 
   extraVolumes:
     - name: php-conf
@@ -71,13 +66,6 @@ mediawiki:
         items:
           - key: custom.ini
             path: custom.ini
-    - name: local
-      configMap:
-        name: '{{ template "common.names.fullname" . }}--local'
-        defaultMode: 0777
-        items:
-          - key: init.sh
-            path: init.sh
     - name: init
       configMap:
         name: '{{ template "common.names.fullname" . }}--init'
@@ -85,6 +73,8 @@ mediawiki:
         items:
           - key: get_mediawiki_extensions.sh
             path: get_mediawiki_extensions.sh
+          - key: init.sh
+            path: init.sh
     - name: localsettings
       secret:
         secretName: '{{ template "common.names.fullname" . }}--local'
@@ -92,9 +82,13 @@ mediawiki:
   initContainers:
   - name: '{{ template "common.names.fullname" . }}--init'
     image: bash
-    args: ["/opt/init/bin/get_mediawiki_extensions.sh"]
+    args: ["/opt/init/bin/init.sh"]
     volumeMounts:
     - name: mediawiki-data
       mountPath: /bitnami/mediawiki
+      subPath: mediawiki
     - name: init
       mountPath: /opt/init/bin
+    - name: localsettings
+      mountPath: /opt/local/etc/LocalSettings.php
+      subPath: LocalSettings.php

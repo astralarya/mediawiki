@@ -3,6 +3,12 @@ kind: ConfigMap
 metadata:
   name: {{ template "common.names.fullname" . }}--init
 data:
+  init.sh: |
+    echo "Update settings"
+    cp /opt/local/etc/LocalSettings.php /bitnami/mediawiki/
+    echo "Update extentions"
+    /opt/init/bin/get_mediawiki_extensions.sh
+    echo "DONE"
   get_mediawiki_extensions.sh: |
     set -e
 
@@ -53,17 +59,15 @@ data:
         URL="$(echo_extension_url "$NAME")"
         if [ ! -d "$NAME" ]
         then
+            echo Downloading "'$i'"
             wget -O "${NAME}.tar.gz" "$URL" && \
             mkdir "$NAME" && \
             tar -xf "${NAME}.tar.gz" -C "$NAME" && \
             rm "${NAME}.tar.gz"
-        else
-            echo '* exists'
         fi
     }
 
     for i in "${EXTENSIONS[@]}"
     do
-        echo Downloading "'$i'"
         get_extension "$i"
     done

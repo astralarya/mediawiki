@@ -63,7 +63,7 @@ $wgEmailAuthentication = true;
 ## Database settings
 $wgDBtype = "mysql";
 $wgDBserver = "{{ .Values.mediawiki.externalDatabase.host }}";
-$wgDBname = "{{ .Values.mediawiki.externalDatabase.name }}";
+$wgDBname = "{{ .Values.mediawiki.externalDatabase.database }}";
 $wgDBuser = "{{ .Values.mediawiki.externalDatabase.user }}";
 $wgDBpassword = "{{ .Values.mediawiki.externalDatabase.password }}";
 $wgDBssl = true;
