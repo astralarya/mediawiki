@@ -186,6 +186,7 @@ wfLoadExtension('Scribunto');
 wfLoadExtension('SecureLinkFixer');
 wfLoadExtension('SyntaxHighlight_GeSHi');
 wfLoadExtension('TemplateData');
+wfLoadExtension('TemplateStyles');
 wfLoadExtension('TextExtracts');
 wfLoadExtension('TitleBlacklist');
 wfLoadExtension('TwoColConflict');
